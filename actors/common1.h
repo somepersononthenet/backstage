@@ -39,6 +39,7 @@ extern Hierarchy RCP_HmsMainroomDoorA[];
 extern Hierarchy RCP_HmsMainroomDoorB[];
 extern Hierarchy RCP_HmsMainroomDoorC[];
 extern Hierarchy RCP_HmsMainroomDoorD[];
+extern Hierarchy RCP_HmsTeresaDoor[];
 extern AnimePtr door_anime[];
 
 // explosion
