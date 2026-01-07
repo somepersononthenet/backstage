@@ -6,6 +6,7 @@
 #include "dialog_ids.h"
 #include "segment_symbols.h"
 #include "level_commands.h"
+#include "config.h"
 
 #include "game/level_update.h"
 
@@ -66,7 +67,11 @@ const LevelScript level_bbh_entry[] = {
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_global_10),
     JUMP_LINK(script_func_global_18),
-    LOAD_MODEL_FROM_GEO(MODEL_TERESA_DOOR,               RCP_HmsTeresaDoor),
+    #ifdef boodoor
+    LOAD_MODEL_FROM_GEO(MODEL_CASTLE_DOOR,               RCP_HmsTeresaDoor),
+    #else
+    LOAD_MODEL_FROM_GEO(MODEL_CASTLE_DOOR,               RCP_HmsMainDoor),
+    #endif
     /*LOAD_MODEL_FROM_GEO(MODEL_BBH_STAIRCASE_STEP,         geo_bbh_0005B0),
     LOAD_MODEL_FROM_GEO(MODEL_BBH_TILTING_FLOOR_PLATFORM, geo_bbh_0005C8),
     LOAD_MODEL_FROM_GEO(MODEL_BBH_TUMBLING_PLATFORM,      geo_bbh_0005E0),
@@ -82,13 +87,13 @@ const LevelScript level_bbh_entry[] = {
         JUMP_LINK(script_func_local_3),
         JUMP_LINK(script_func_local_4),
         OBJECT(/*model*/ MODEL_NONE, /*pos*/ -700, 0, -1650, /*angle*/ 0, 90, 0, /*bhvParam*/ BPARAM2(WARP_NODE_0A), /*bhv*/ bhvSpinAirborneWarp),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ 1727, 0, -939, 0, -180, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ -935, 0, -517, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ -583, 0, 939, 0, -180, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ 939, 0, 517, 0, -95, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ 939, 0, 1573, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ 931, 0, -1683, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
-        OBJECT(/*model*/ MODEL_TERESA_DOOR,       /*pos*/ -1287, 0, 59, 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ 1727, 0, -939, 0, -180, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ -935, 0, -517, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ -583, 0, 939, 0, -180, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ 939, 0, 517, 0, -95, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ 939, 0, 1573, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ 931, 0, -1683, 0, 90, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
+        OBJECT(/*model*/ MODEL_CASTLE_DOOR,       /*pos*/ -1287, 0, 59, 0, 0, 0, /*bhvParam*/ 0x00000000, /*bhv*/ bhvDoor),
         TERRAIN(/*terrainData*/ ghost_house_collision),
         MACRO_OBJECTS(/*objList*/ bbh_seg7_macro_objs),
         ROOMS(/*surfaceRooms*/ bbh_seg7_rooms),

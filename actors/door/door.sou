@@ -1,3 +1,4 @@
+#include "config.h"
 /********************************************************************************
 		RCP_FarMainDoor and RCP_NearMainDoor
 														[ Jun 1, 1996 ]
@@ -36,6 +37,7 @@ ALIGNED8 static const Texture rn_3_txt[] = {
 ALIGNED8 static const Texture rn_4_txt[] = {
 #include "actors/door/rn_4_txt.rgba16.inc.c"
 };
+#ifdef boodoor
 ALIGNED8 static const Texture teresa_door_txt[] = {
 #include "actors/door/teresa_door_txt.rgba16.inc.c"
 };
@@ -43,6 +45,7 @@ ALIGNED8 static const Texture teresa_door_txt[] = {
 ALIGNED8 static const Texture teresa_door_side_txt[] = {
 #include "actors/door/teresa_door_side_txt.rgba16.inc.c"
 };
+#endif
 
 /* ========================================================================================
 		: Vtx of NearMainDoor.
@@ -388,7 +391,7 @@ Gfx RCP_mainroom_doorD[] = {
 	gsSPDisplayList(gfx_room_no_reset),
 	gsSPEndDisplayList()
 };
-
+#ifdef boodoor
 /* ========================================================================================
 		: Teresa Door Near Gfx.
 ===========================================================================================	*/
@@ -520,7 +523,7 @@ Gfx RCP_FarTeresaDoor[] = {
 	gsSPSetGeometryMode(G_SHADING_SMOOTH),
 	gsSPEndDisplayList() 
 };
-
+#endif
 /**************************************************************************************
 
 
