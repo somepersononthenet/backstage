@@ -262,6 +262,7 @@ void play_mario_jump_sound(struct MarioState *m) {
  * Spawns particles if the step sound says to, then either plays a step sound or relevant other sound.
  */
 void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 waveParticleType) {
+#ifdef POWBUILD
     if (m->terrainSoundAddend == (SOUND_TERRAIN_WATER << 16)) {
         if (waveParticleType != 0) {
             m->particleFlags |= PARTICLE_SHALLOW_WATER_SPLASH;
@@ -269,6 +270,7 @@ void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 wav
             m->particleFlags |= PARTICLE_SHALLOW_WATER_WAVE;
         }
     }
+#endif
 
     if (soundBits == SOUND_ACTION_UNSTUCK_FROM_GROUND || soundBits == SOUND_ACTION_SPIN) {
         play_sound(soundBits, m->marioObj->header.gfx.cameraToObject);
@@ -1617,7 +1619,8 @@ void init_mario_from_save_file(void) {
     gMarioState->animList = &gPlayerAnimsBuf[0];
 
     gMarioState->numCoins = 0;
-    gMarioState->numStars = 0;
+    gMarioState->numStars =
+        save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;
 
     gMarioState->numLives = 2;
