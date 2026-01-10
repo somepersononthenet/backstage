@@ -1400,7 +1400,7 @@ void update_mario_health(struct MarioState *m) {
                 // If using the debug level select, do not lose any HP to water.
                 if ((m->pos[1] >= (m->waterLevel - 140)) && !terrainIsSnow) {
                     m->health += 0x34;
-                } else if (gDebugLevelSelect == 0) {
+                } else {
                     m->health -= (terrainIsSnow ? 3 : 1);
                 }
             } else {
@@ -1618,9 +1618,9 @@ void init_mario_from_save_file(void) {
     gMarioState->controller = &gControllers[0];
     gMarioState->animList = &gPlayerAnimsBuf[0];
 
-    gMarioState->numCoins = 0;
+    gMarioState->numCoins = 2;
     gMarioState->numStars =
-        save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
+        save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1) + 1;
     gMarioState->numKeys = 0;
 
     gMarioState->numLives = 2;
@@ -1629,7 +1629,7 @@ void init_mario_from_save_file(void) {
     gMarioState->prevNumStarsForDialog = gMarioState->numStars;
     gMarioState->unkB0 = 0xBD;
 
-    gHudDisplay.coins = 0;
+    gHudDisplay.coins = 2;
     gHudDisplay.wedges = 8;
 
     gMessageHasBeenRead = 0;

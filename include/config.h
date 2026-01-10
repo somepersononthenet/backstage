@@ -20,7 +20,7 @@
 #define BORDER_HEIGHT 2
 
 // POW Build
-//#define POWBUILD
+#define POWBUILD
 
 // Ghost house door
 //#define boodoor
