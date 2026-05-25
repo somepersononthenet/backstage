@@ -14,7 +14,6 @@ extern const GeoLayout jrb_geo_000A18[];
 extern const Gfx sunken_ship_1_dl_mesh[];
 extern const Gfx sunken_ship_2_dl_mesh[];
 extern const Gfx sunken_ship_3_dl_mesh[];
-extern const Gfx sunken_ship_4_dl_mesh[];
 
 extern const Collision sunken_ship_collision[];
 extern struct AreaMapData areaMap_12_01;

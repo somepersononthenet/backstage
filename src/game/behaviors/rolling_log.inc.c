@@ -6,6 +6,90 @@
 // hypothesis is that the object in the middle here used to be
 // a rolling log of another variation.
 
+void bhv_ttm_rolling_log_init(void) {
+    o->oPitouneUnkF8 = 3970.0f;
+    o->oPitouneUnkFC = 3654.0f;
+    o->oPitouneUnkF4 = 271037.0f;
+
+    o->oMoveAngleYaw = 8810;
+    o->oForwardVel = 0.0f;
+    o->oVelX = 0.0f;
+    o->oVelZ = 0.0f;
+    o->oFaceAnglePitch = 0;
+    o->oAngleVelPitch = 0;
+}
+
+void rolling_log_roll_log(void) {
+    if (gMarioObject->platform == o) {
+        f32 sp24 = (gMarioObject->header.gfx.pos[2] - o->oPosZ) * coss(-1*o->oMoveAngleYaw)
+                   - (gMarioObject->header.gfx.pos[0] - o->oPosX) * sins(-1*o->oMoveAngleYaw);
+        if (sp24 > 0) {
+            o->oAngleVelPitch += 0x10;
+        } else {
+            o->oAngleVelPitch -= 0x10;
+        }
+
+        if (o->oAngleVelPitch > 0x200) {
+            o->oAngleVelPitch = 0x200;
+        }
+
+        if (o->oAngleVelPitch < -0x200) {
+            o->oAngleVelPitch = -0x200;
+        }
+    } else {
+        if (is_point_close_to_object(o, o->oHomeX, o->oHomeY, o->oHomeZ, 100)) {
+            if (o->oAngleVelPitch != 0) {
+                if (o->oAngleVelPitch > 0) {
+                    o->oAngleVelPitch -= 0x10;
+                } else {
+                    o->oAngleVelPitch += 0x10;
+                }
+
+                if (o->oAngleVelPitch < 0x10 && o->oAngleVelPitch > -0x10) {
+                    o->oAngleVelPitch = 0;
+                }
+            }
+        } else {
+            if (o->oAngleVelPitch != 0x100) {
+                if (o->oAngleVelPitch > 0x100) {
+                    o->oAngleVelPitch -= 0x10;
+                } else {
+                    o->oAngleVelPitch += 0x10;
+                }
+
+                if (o->oAngleVelPitch < 0x110 && o->oAngleVelPitch > 0xF0) {
+                    o->oAngleVelPitch = 0x100;
+                }
+            }
+        }
+    }
+}
+
+void bhv_rolling_log_loop(void) {
+    f32 prevX = o->oPosX;
+    f32 prevZ = o->oPosZ;
+
+    rolling_log_roll_log();
+
+    o->oForwardVel = o->oAngleVelPitch / 0x40;
+    o->oVelX = o->oForwardVel * sins(o->oMoveAngleYaw);
+    o->oVelZ = o->oForwardVel * coss(o->oMoveAngleYaw);
+
+    o->oPosX += o->oVelX;
+    o->oPosZ += o->oVelZ;
+
+    if (o->oPitouneUnkF4 < sqr(o->oPosX - o->oPitouneUnkF8) + sqr(o->oPosZ - o->oPitouneUnkFC)) {
+        o->oForwardVel = 0.0f;
+        o->oPosX = prevX;
+        o->oPosZ = prevZ;
+        o->oVelX = 0.0f;
+        o->oVelZ = 0.0f;
+    }
+
+    o->oFaceAnglePitch += o->oAngleVelPitch;
+
+}
+
 void volcano_act_1(void) {
     o->oRollingLogUnkF4 += 4.0f;
     o->oAngleVelPitch += o->oRollingLogUnkF4;
@@ -16,7 +100,6 @@ void volcano_act_1(void) {
         o->oAngleVelPitch = 0;
         o->oRollingLogUnkF4 = 0;
         o->oAction = 2;
-        cur_obj_play_sound_2(SOUND_GENERAL_BIG_POUND);
         set_camera_shake_from_point(SHAKE_POS_LARGE, o->oPosX, o->oPosY, o->oPosZ);
     }
 }
@@ -36,13 +119,6 @@ void volcano_act_3(void) {
 
 void bhv_volcano_trap_loop(void) {
     switch (o->oAction) {
-        case 0:
-            if (is_point_within_radius_of_mario(o->oPosX, o->oPosY, o->oPosZ, 1000)) {
-                o->oAction = 1;
-                cur_obj_play_sound_2(SOUND_GENERAL_QUIET_POUND2);
-            }
-            break;
-
         case 1:
             volcano_act_1();
             break;

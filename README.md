@@ -45,45 +45,25 @@ For more questions, join our [Discord server](https://discord.gg/ynabeAS4eD).
 
 ## Credits
 
-### '96flashbacks' Team
-
 #### Main Programming
 - stalechilibeans
 - 1up Guy
-- elinspectorardilla
-
-#### Additional Programming
-- ummheather
-- iProgramInCpp
-
-#### Assets
-- Scraps
-- ummheather
-- 1up Guy
-- stalechilibeans
-- `K-Dubs΄
-
-#### Music & Audio
-- `K-Dubs΄
-- 1up Guy
-- stalechilibeans
-- ummheather
-
-#### Research & Playtesting
-- Scraps
-- Sleekflash16
-- duskewl/jadu
-- `K-Dubs΄
-  
-### '96flashbacks' Server Contributors
 
 #### Additional Programming
 - Phil564
 - klorfmorf/Fluvian
 - diesel64
 - penguinlambz
+- ummheather
+- iProgramInCpp
+- crackaddictkonata
 
 #### Assets
+- Scraps
+- ummheather
+- 1up Guy
+- stalechilibeans
+- `K-Dubs΄
 - toonjoey
 - Lurondor
 - icehotlemonade
@@ -98,25 +78,42 @@ For more questions, join our [Discord server](https://discord.gg/ynabeAS4eD).
 - RetroDev
 - emlimate
 - XKoop7321
+- `K-Dubs΄
+- 1up Guy
+- stalechilibeans
+- ummheather
+
+#### Research & Playtesting
+- Scraps
+- Sleekflash16
+- toonjoey
+- Xiartic
+- Lurondor
+- Zucchino
+- duskewl/jadu
+- `K-Dubs΄
 
 #### Miscellaneous Help
 - packrcrackr
 - Xiartic
-- WooHale54
+- Woohale54
+- RM05
 - timmy6259
 - Zucchino
 - Xerox
   
 #### Special Thanks
 - na0micakes
+- toonjoey
 - Matsilagi
 - lunr
 - CharD
 - RM05
+- icehotlemonade
 - Tony (Hard4Games)
 - aaali
 
-### Original 'The Preservation Project' Team
+## Original 'The Preservation Project' Credits
 
 #### Programming
 - klorfmorf/Fluvian
@@ -134,7 +131,7 @@ For more questions, join our [Discord server](https://discord.gg/ynabeAS4eD).
 - Xiartic
 - lunr
   
-#### Original 'The Preservation Project' Contributors
+#### Original 'The Preservation Project' GitHub Contributors
 - 1up Guy
 - Guestpiki
 - iProgramInCpp

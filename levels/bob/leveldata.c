@@ -16,7 +16,6 @@
 #include "levels/bob/areas/1/2/model.inc.c"
 #include "levels/bob/areas/1/3/model.inc.c"
 #include "levels/bob/areas/1/4/model.inc.c"
-#include "levels/bob/areas/1/5/model.inc.c"
 #include "levels/bob/seesaw_platform/model.inc.c"
 #include "levels/bob/grate_door/model.inc.c"
 #include "levels/bob/areas/1/collision.inc.c"

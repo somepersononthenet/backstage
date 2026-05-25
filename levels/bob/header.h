@@ -12,10 +12,9 @@ extern const GeoLayout bob_geo_000488[];
 
 // leveldata
 extern const Gfx bob_1_dl_mesh[];
-extern const Gfx bob_pazair_mesh[];
+extern const Gfx bob_2_dl_mesh[];
 extern const Gfx bob_3_dl_mesh[];
 extern const Gfx bob_4_dl_mesh[];
-extern const Gfx bob_5_dl_mesh[];
 extern const Gfx bob_seg7_dl_0700E768[];
 extern const Gfx bob_seg7_dl_0700E8A0[];
 extern const Collision bob_collision[];

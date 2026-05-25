@@ -17,6 +17,7 @@
 #include "actors/group1.h"
 #include "actors/group2.h"
 #include "actors/group4.h"
+#include "actors/group6.h"
 #include "actors/group7.h"
 #include "actors/group9.h"
 #include "actors/group10.h"
@@ -33,6 +34,7 @@
 #include "levels/ccm/header.h"
 #include "levels/ttc/header.h"
 #include "levels/bitdw/header.h"
+#include "levels/ttm/header.h"
 
 #include "make_const_nonconst.h"
 #include "behavior_data.h"
@@ -1819,6 +1821,24 @@ const BehaviorScript bhvFish[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvUkiki[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Ukiki - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_INT(oInteractType, INTERACT_GRABBABLE),
+    SET_INT(oInteractionSubtype, INT_SUBTYPE_HOLDABLE_NPC),
+    SET_HITBOX(/*Radius*/ 40, /*Height*/ 40),
+    SET_INT(oIntangibleTimer, 0),
+    DROP_TO_FLOOR(),
+    LOAD_ANIMATIONS(oAnimations, monky_anime),
+    ANIMATE(0),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ -400, /*Bounciness*/ -50, /*Drag strength*/ 0, /*Friction*/ 0, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+    SET_HOME(),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_ukiki_loop),
+    END_LOOP(),
+};
+
 const BehaviorScript bhvChirpChirp[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     SET_INT(oBirdChirpChirpUnkF4, 1),
@@ -2739,6 +2759,19 @@ const BehaviorScript bhvStar[] = {
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_collect_star_loop),
         ANIMATE_TEXTURE(oAnimState, 2),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvTTMRollingLog[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(ttm_seg7_collision_pitoune_2),
+    SET_HOME(),
+    SET_FLOAT(oCollisionDistance, 2000),
+    CALL_NATIVE(bhv_ttm_rolling_log_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_rolling_log_loop),
+        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
 

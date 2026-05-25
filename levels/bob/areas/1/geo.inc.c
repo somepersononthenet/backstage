@@ -16,9 +16,8 @@ const GeoLayout bob_geo_000488[] = {
             GEO_CAMERA(CAMERA_MODE_FREE_ROAM, 0, 2000, 6000, 3072, 0, -4608, geo_camera_main),
             GEO_OPEN_NODE(),
                GEO_DISPLAY_LIST(LAYER_OPAQUE, bob_1_dl_mesh), //main level
-               GEO_DISPLAY_LIST(LAYER_ALPHA, bob_pazair_mesh), //fences
-               GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, bob_4_dl_mesh), //shadows
-               GEO_DISPLAY_LIST(LAYER_ALPHA, bob_5_dl_mesh), //fences
+               GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, bob_3_dl_mesh), //shadows
+               GEO_DISPLAY_LIST(LAYER_ALPHA, bob_4_dl_mesh), //fences
                GEO_RENDER_OBJ(),
                GEO_ASM(     0, geo_movtex_pause_control),
                GEO_ASM(MOVTEX_BOB_WATERFALL, geo_movtex_draw_nocolor),
