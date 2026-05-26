@@ -31,6 +31,11 @@ UNUSED static const u64 binid_7 = 7;
 #include "blue_fish/anims/table.inc.c"
 UNUSED static const u64 binid_8 = 8;
 
+#include "bub/model.inc.c"
+#include "bub/anims/data.inc.c"
+#include "bub/anims/table.inc.c"
+UNUSED static const u64 binid_9 = 9;
+
 #include "leaves/model.inc.c"
 UNUSED static const u64 binid_10 = 10;
 

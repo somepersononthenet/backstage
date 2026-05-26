@@ -6851,7 +6851,7 @@ void fov_default(struct MarioState *m) {
     }
 
     // Nintendo is dumb
-    if ((gCurrLevelNum == LEVEL_CCM) || (gCurrLevelNum == LEVEL_DDD)) {
+    if ((gCurrLevelNum == LEVEL_WF) || (gCurrLevelNum == LEVEL_CCM) || (gCurrLevelNum == LEVEL_DDD)) {
         sFOVState.fov = 45.f;
     }
 }

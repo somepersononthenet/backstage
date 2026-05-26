@@ -13,6 +13,7 @@
 #include "warp_pipe/geo.inc.c"
 #include "door/door.hms"
 #include "flame/geo.inc.c"
+#include "bub/geo.inc.c"
 #include "blue_fish/geo.inc.c"
 #include "leaves/geo.inc.c"
 #include "number/geo.inc.c"

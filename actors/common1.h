@@ -4,6 +4,22 @@
 #include "types.h"
 #include "headers.h"
 
+// bub
+extern const GeoLayout bub_geo[];
+extern const Gfx bub_seg6_dl_06011848[];
+extern const Gfx bub_seg6_dl_060118C0[];
+extern const Gfx bub_seg6_dl_06011918[];
+extern const Gfx bub_seg6_dl_06011968[];
+extern const Gfx bub_seg6_dl_06011A50[];
+extern const Gfx bub_seg6_dl_06011B28[];
+extern const Gfx bub_seg6_dl_06011C58[];
+extern const Gfx bub_seg6_dl_06011CF0[];
+extern const Gfx bub_seg6_dl_06011DC0[];
+extern const Gfx bub_seg6_dl_06011E48[];
+extern const Gfx bub_seg6_dl_06011F18[];
+extern const Gfx bub_seg6_dl_06011FA0[];
+extern const struct Animation *const bub_seg6_anims_06012354[];
+
 // blue_fish
 extern const GeoLayout fish_shadow_geo[];
 extern const GeoLayout fish_geo[];

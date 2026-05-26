@@ -15,11 +15,6 @@ UNUSED static const u64 binid_0 = 0;
 #include "cyan_fish/anims/table.inc.c"
 UNUSED static const u64 binid_1 = 1;
 
-#include "bub/model.inc.c"
-#include "bub/anims/data.inc.c"
-#include "bub/anims/table.inc.c"
-UNUSED static const u64 binid_2 = 2;
-
 #include "water_ring/model.inc.c"
 #include "water_ring/anims/data.inc.c"
 #include "water_ring/anims/table.inc.c"

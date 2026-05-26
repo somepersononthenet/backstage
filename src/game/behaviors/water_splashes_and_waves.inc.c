@@ -79,7 +79,7 @@ void bhv_water_droplet_loop(void) {
     f32 waterLevel = find_water_level(o->oPosX, o->oPosZ);
 
     if (o->oTimer == 0) {
-        if (cur_obj_has_model(MODEL_FISH)) {
+        if (cur_obj_has_model(MODEL_FISH) || cur_obj_has_model(MODEL_BUB)) {
             o->header.gfx.node.flags &= ~GRAPH_RENDER_BILLBOARD;
         } else {
             o->header.gfx.node.flags |= GRAPH_RENDER_BILLBOARD;

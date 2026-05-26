@@ -32,6 +32,11 @@ void bhv_beta_fish_splash_spawner_loop(void) {
                         if ((random_u16() & 0x1F) == 0) {
                             stratp = spawn_object(o, MODEL_FISH, bhvWaterDroplet);
                             obj_init_animation_with_sound(stratp, blue_fish_seg3_anims_0301C2B0, 0);
+                        }
+                            else if ((random_u16() & 0x3F) == 0) {
+                            stratp = spawn_object(o, MODEL_BUB, bhvWaterDroplet);
+							obj_init_animation_with_sound(stratp, bub_seg6_anims_06012354, 0);
+                            
                         } else {
                             stratp = spawn_object(o, MODEL_WHITE_PARTICLE_SMALL, bhvWaterDroplet);
                             sc = random_float() * 1 + 0.5;
