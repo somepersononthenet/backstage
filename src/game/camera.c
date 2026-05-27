@@ -1746,7 +1746,7 @@ s16 update_default_camera(struct Camera *c) {
     handle_c_button_movement(c);
     vec3f_get_dist_and_angle(sMarioCamState->pos, c->pos, &dist, &pitch, &yaw);
 
-    if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT {
+    if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
         zoomDist = gCameraZoomDist + 400;
     } else {
         zoomDist = gCameraZoomDist;
