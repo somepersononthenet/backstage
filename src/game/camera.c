@@ -1746,7 +1746,7 @@ s16 update_default_camera(struct Camera *c) {
     handle_c_button_movement(c);
     vec3f_get_dist_and_angle(sMarioCamState->pos, c->pos, &dist, &pitch, &yaw);
 
-    if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT && c->mode == CAMERA_MODE_CLOSE) {
+    if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT {
         zoomDist = gCameraZoomDist + 400;
     } else {
         zoomDist = gCameraZoomDist;
@@ -1760,16 +1760,16 @@ s16 update_default_camera(struct Camera *c) {
             }
         }
     } else {
-        if ((sZoomAmount -= 30.f) < 0.f) {
+        if ((sZoomAmount -= 10.f) < 0.f) {
             sZoomAmount = 0.f;
         }
         if (dist > zoomDist) {
-            if ((dist -= 30.f) < zoomDist) {
+            if ((dist -= 10.f) < zoomDist) {
                 dist = zoomDist;
             }
         }
         if (dist < zoomDist) {
-            if ((dist += 30.f) > zoomDist) {
+            if ((dist += 10.f) > zoomDist) {
                 dist = zoomDist;
             }
         }
@@ -1891,14 +1891,11 @@ s16 update_default_camera(struct Camera *c) {
     }
 
     posHeight = 0.f;
-    if (c->mode == CAMERA_MODE_FREE_ROAM) {
         if (gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT) {
-            posHeight = 375.f;
-        } else {
-            posHeight = 100.f;
+            posHeight = 500.f;
         }
-    }
-
+    
+// intro cutscene camera behavior,, seems a little hacky?
     if (xzDist < 180.f && sMarioCamState->unused == 1) {
         c->pos[1] = marioFloorHeight + (300 - xzDist);
     } else if ((xzDist > 300.f && sMarioCamState->unused != 0)
@@ -1951,13 +1948,9 @@ s16 update_default_camera(struct Camera *c) {
             c->pos[1] = ceilHeight;
         }
     }
+// vec3f_set_dist_and_angle(c->pos, c->pos, sLakituDist, sLakituPitch + 0x1000, yaw);
 
-    if (c->mode != CAMERA_MODE_CLOSE) {
-        lakitu_zoom(400.f, 0x600);
-        vec3f_set_dist_and_angle(c->pos, c->pos, sLakituDist, sLakituPitch + 0x1000, yaw);
-    }
-
-    set_camera_height(c, c->pos[1] - 125.0f);
+    //set_camera_height(c, c->pos[1] - 125.0f);
     return yaw;
 }
 #pragma GCC diagnostic pop
