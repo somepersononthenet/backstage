@@ -121,11 +121,6 @@ s32 act_holding_pole(struct MarioState *m) {
         return set_mario_action(m, ACT_SOFT_BONK, 0);
     }
 
-    if (m->actionTimer <= 12) {
-        anim = MARIO_ANIM_JUST_GRABBED_POLE;
-        m->actionTimer++;
-    }
-
     if (m->controller->stickY > 16.0f) {
         f32 poleTop = m->usedObj->hitboxHeight - 100.0f;
 

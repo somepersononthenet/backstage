@@ -1948,9 +1948,11 @@ s16 update_default_camera(struct Camera *c) {
             c->pos[1] = ceilHeight;
         }
     }
-// vec3f_set_dist_and_angle(c->pos, c->pos, sLakituDist, sLakituPitch + 0x1000, yaw);
 
-    //set_camera_height(c, c->pos[1] - 125.0f);
+    if (!(gCameraMovementFlags & CAM_MOVE_ZOOMED_OUT)) {
+        set_camera_height(c, c->pos[1] - 125.0f); 
+    }
+
     return yaw;
 }
 #pragma GCC diagnostic pop
