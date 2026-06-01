@@ -283,8 +283,8 @@ void update_flying(struct MarioState *m) {
         } else {
             m->faceAngle[0] -= 0x400;
         }
-        } else {
-            if (m->forwardVel > 16.0f) {
+    } else {
+        if (m->forwardVel > 16.0f) {
             m->faceAngle[0] += (m->forwardVel - 32.0f) * 6.0f;
         } else if (m->forwardVel < 16.0f) {
             m->faceAngle[0] += (m->forwardVel - 32.0f) * 100.0f;
