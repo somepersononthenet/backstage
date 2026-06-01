@@ -291,8 +291,6 @@ void update_flying(struct MarioState *m) {
         }
     }
 
-
-        
     m->faceAngle[0] += m->angleVel[0];
 
     if (m->faceAngle[0] > 0x2AAA) {
@@ -1286,15 +1284,14 @@ s32 act_shot_from_cannon(struct MarioState *m) {
             lava_boost_on_wall(m);
             break;
     }
-
-    m->vel[1] -= 1.35f;
-
+    
+	m->vel[1] -= 1.35f;
 
     if (m->vel[1] < 11.5f) {
         set_mario_action(m, ACT_FLYING, 0);
     }
 
-    if ((m->forwardVel -= 0.1) < 0.0f) {
+	if ((m->forwardVel -= 0.1) < 0.0f) {
         mario_set_forward_vel(m, 0.0f);
     }
 
