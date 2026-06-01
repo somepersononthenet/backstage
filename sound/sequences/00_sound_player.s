@@ -1504,7 +1504,7 @@ chan_end
 .layer_96E:
 layer_somethingon
 .layer_96F:
-layer_note1 40, 0x8, 105
+layer_note1 40, 0x8, 86
 layer_jump .layer_96F
 layer_end
 
@@ -4546,7 +4546,6 @@ chan_setlayer 0, .layer_2061
 chan_end
 
 .layer_2061:
-layer_portamento 0x81, 38, 255
 layer_note1 39, 0xd2, 127
 layer_end
 
