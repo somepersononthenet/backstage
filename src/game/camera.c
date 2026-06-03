@@ -788,18 +788,19 @@ void radial_camera_move(struct Camera *c) {
     f32 areaDistZ = sMarioCamState->pos[2] - c->areaCenZ;
     UNUSED s32 filler;
 
-    // The angle from the camera to the pivot subtracted from mario's angle
-    s16 turnYaw = gMarioState->faceAngle[1] - atan2s(areaDistZ, areaDistX);
 
-    // How much the camera's yaw changed
-    s16 yawOffset = calculate_yaw(sMarioCamState->pos, c->pos) - atan2s(areaDistZ, areaDistX);
+    // The angle from the camera to the pivot subtracted from mario's moving angle
+    s16 turnYaw = atan2s(gMarioState->vel[2], gMarioState->vel[0]) - atan2s(areaDistZ, areaDistX);
 
-    if (yawOffset > maxAreaYaw) {
+    // Difference between current yaw and area-center-to-mario angle
+    //s16 yawOffset = calculate_yaw(sMarioCamState->pos, c->pos) - atan2s(areaDistZ, areaDistX);
+
+    /*if (yawOffset > maxAreaYaw) {
         yawOffset = maxAreaYaw;
     }
     if (yawOffset < minAreaYaw) {
         yawOffset = minAreaYaw;
-    }
+    }*/
 
     // Check if mario stepped on a surface that rotates the camera. For example, when mario enters the
     // gate in BoB, the camera turns right to face up the hill path
@@ -898,26 +899,15 @@ void radial_camera_move(struct Camera *c) {
         } else {
             // sModeOffsetYaw only updates when mario is moving
             if (c->mode == CAMERA_MODE_RADIAL) {
-                /*
-                   rotateSpeed is based on the direction and velocity of mario. if you are moving
-                   parallel to the angle from the camera to the pivot, the camera will NOT turn.
-                   if you are moving adjacent to it, the camera WILL turn.
-
-                   01/12/26 edit: the rotation speed peaks when mario runs diagonally (45 degrees)
-                   relative to the camera pivot. the speed decreases as mario runs more perpendicular,
-                   or at least that's kind of how this is supposed to work
-
-                   the cam's rotatespeed is SUPPOSED to peak at 1024 when mario runs diagonally (as seen
-                   in footage) but i cannot get that to be the case without completely screwing up the
-                   wf and lll spawn camera angles...... xd. 
-                   
-                   so for now it'll have fuckass coefficients tuned to match them.
-                */
-                rotateSpeed = 1024.f * sins(turnYaw) * (0.52f + 0.48f * coss(turnYaw));
-                camera_approach_s16_symmetric_bool(&sModeOffsetYaw, yawOffset, rotateSpeed);
-            }
-            if (c->mode == CAMERA_MODE_OUTWARD_RADIAL) {
-                sModeOffsetYaw = offset_yaw_outward_radial(c, atan2s(areaDistZ, areaDistX));
+                rotateSpeed = 128.f;
+                // turning logic, i
+                if (gMarioStates->forwardVel != 0) {
+                    if (turnYaw < 0) {
+                        camera_approach_s16_symmetric_bool(&sModeOffsetYaw, maxAreaYaw, absf(sins(turnYaw) * rotateSpeed));
+                    } else if (turnYaw > 0) { 
+                        camera_approach_s16_symmetric_bool(&sModeOffsetYaw, minAreaYaw, absf(sins(turnYaw) * rotateSpeed));
+                    }
+                }
             }
         }
     }
@@ -1544,11 +1534,11 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     pitch = calculate_pitch(focus, pos);
     vec3f_get_dist_and_angle(focus, pos, &dist, &pitch, &yaw);
     if (dist > maxDist) {
-        dist = maxDist;
+        camera_approach_f32_symmetric_bool(&dist, maxDist, 128);
     }
 
-    camera_approach_s16_symmetric_bool(&yaw, marioYaw, yawSpeed);
-    camera_approach_s16_symmetric_bool(&pitch, goalPitch, pitchInc);
+    camera_approach_s16_symmetric_bool(&yaw, marioYaw, 192);
+    camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
     if (dist < 300.f) {
         dist = 300.f;
     }
@@ -1585,7 +1575,7 @@ s32 mode_behind_mario(struct Camera *c) {
             newPos[1] = floorHeight;
         }
     }
-    approach_camera_height(c, newPos[1], 30.f);
+    approach_camera_height(c, newPos[1], 32.f);
     waterHeight = find_water_level(c->pos[0], c->pos[2]) + 100.f;
     if (c->pos[1] <= waterHeight) {
         gCameraMovementFlags |= CAM_MOVE_SUBMERGED;
