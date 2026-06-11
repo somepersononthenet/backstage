@@ -819,10 +819,9 @@ void radial_camera_move(struct Camera *c) {
         }
     }
 
-    if (gCameraMovementFlags & CAM_MOVE_ENTERED_ROTATE_SURFACE) {
-        rotateSpeed = 0x80;
-        maxAreaYaw = DEGREES(30); // causes the camera to stop sooner when entering snow slider
-    }
+  /*if (!(gCameraMovementFlags & CAM_FLAG_SPAWN)) {
+        rotateSpeed = 128.f;
+    }*/
 
     if (c->mode == CAMERA_MODE_OUTWARD_RADIAL) {
         areaDistX = -areaDistX;
@@ -899,7 +898,16 @@ void radial_camera_move(struct Camera *c) {
         } else {
             // sModeOffsetYaw only updates when mario is moving
             if (c->mode == CAMERA_MODE_RADIAL) {
-                rotateSpeed = 128.f;
+                rotateSpeed = 0x80;
+                if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
+                    if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
+                        rotateSpeed = 0xA0;
+                    } else if (gCurrLevelNum == LEVEL_WF) {
+                        rotateSpeed = 0x3A;
+                    } else if (gCurrLevelNum == LEVEL_LLL) {
+                        rotateSpeed = 0x10;
+                    }
+                }
                 // turning logic, i
                 if (gMarioStates->forwardVel != 0) {
                     if (turnYaw < 0) {
@@ -2831,9 +2839,6 @@ void init_camera(struct Camera *c) {
         gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
     }
     switch (gCurrLevelArea) {
-        case AREA_CCM_OUTSIDE:
-            gCameraMovementFlags |= (CAM_MOVE_ROTATE_RIGHT | CAM_MOVE_ENTERED_ROTATE_SURFACE);
-            break;
         case AREA_CCM_SLIDE:
             vec3f_set(marioOffset, 0.f, 0.f, 475.f);
             break;
