@@ -819,10 +819,6 @@ void radial_camera_move(struct Camera *c) {
         }
     }
 
-  /*if (!(gCameraMovementFlags & CAM_FLAG_SPAWN)) {
-        rotateSpeed = 128.f;
-    }*/
-
     if (c->mode == CAMERA_MODE_OUTWARD_RADIAL) {
         areaDistX = -areaDistX;
         areaDistZ = -areaDistZ;
@@ -901,7 +897,7 @@ void radial_camera_move(struct Camera *c) {
                 rotateSpeed = 0x80;
                 if (gCameraMovementFlags & CAM_FLAG_SPAWN) {
                     if (gCurrLevelArea == AREA_CCM_OUTSIDE) { 
-                        rotateSpeed = 0xA0;
+                        rotateSpeed = 0xA8;
                     } else if (gCurrLevelNum == LEVEL_WF) {
                         rotateSpeed = 0x3A;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
