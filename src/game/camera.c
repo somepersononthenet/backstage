@@ -830,6 +830,8 @@ void radial_camera_move(struct Camera *c) {
         areaDistX = -areaDistX;
         areaDistZ = -areaDistZ;
     }
+}
+
 
     // Avoid obstructing walls
     avoidStatus = rotate_camera_around_walls(c, c->pos, &avoidYaw, 0x400);
