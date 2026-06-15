@@ -692,7 +692,7 @@ void set_camera_height(struct Camera *c, f32 goalHeight) {
             goalHeight = camFloorHeight;
             c->pos[1] = goalHeight;
         }
-        approach_camera_height(c, goalHeight, 30.f);
+        approach_camera_height(c, goalHeight, 32.f);
         if (camCeilHeight != CELL_HEIGHT_LIMIT) {
             camCeilHeight -= baseOff;
             if ((c->pos[1] > camCeilHeight && sMarioGeometry.currFloorHeight + baseOff < camCeilHeight)
@@ -740,9 +740,15 @@ s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     f32 yOff = 125.f;
     f32 baseDist = 1000.f;
 
-    sAreaYaw = camYaw - sModeOffsetYaw;
-    calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
-    focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    if ((gCurrLevelNum == LEVEL_DDD) && (gCameraMovementFlags & CAM_FLAG_SPAWN)) {
+        yOff = 0x140;
+        sAreaYaw = camYaw - sModeOffsetYaw;
+        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
+        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
+    } else {
+        sAreaYaw = camYaw - sModeOffsetYaw;
+        calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
+        focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
 
     return camYaw;
 }
@@ -903,6 +909,8 @@ void radial_camera_move(struct Camera *c) {
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
                     }
+                      else if (gCurrLevelNum == LEVEL_DDD) {
+                        rotateSpeed = 100.f;
                 }
                 // turning logic, i
                 if (gMarioStates->forwardVel != 0) {
@@ -1538,11 +1546,12 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
 
     if (c->mode == CAMERA_MODE_WATER_SURFACE) {
         if (c->pos[1] > gMarioStates->waterLevel + 120) {
-            dist -= 32.0f * (dist / 1000);
+            dist -= 40.f;
+            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 96);
         } else {
-            if (dist > 1000) dist = 1000; 
+            if (dist > 1000) dist = 1000;
+            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384); 
         } 
-        camera_approach_s16_symmetric_bool(&pitch, goalPitch, 128);
     } else { 
         if (dist > 1000) dist = 1000;
         camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
@@ -6160,8 +6169,8 @@ BAD_RETURN(s32) cutscene_enter_painting(struct Camera *c) {
  * cvar2 is the camera's focus relative to Mario
  */
 BAD_RETURN(s32) cutscene_exit_painting_start(struct Camera *c) {
-    vec3f_set(sCutsceneVars[2].point, -178.f, 40.f, 1050.f);
-    vec3f_set(sCutsceneVars[1].point, -58.f, 30.f, 444.f);
+    vec3f_set(sCutsceneVars[2].point, -200.f, 10.f, 1168.f);
+    vec3f_set(sCutsceneVars[1].point, -58.f, 0.f, 444.f);
     vec3f_copy(sCutsceneVars[0].point, sMarioCamState->pos);
 
     sCutsceneVars[0].angle[0] = 0;
@@ -6227,7 +6236,6 @@ BAD_RETURN(s32) cutscene_exit_painting(struct Camera *c) {
     sStatusFlags |= CAM_FLAG_SMOOTH_MOVEMENT;
     cutscene_event(cutscene_exit_painting_start, c, 0, 0);
     cutscene_event(cutscene_unused_exit_focus_mario, c, 24, 24);
-    cutscene_event(cutscene_unused_exit_focus_mario, c, 26, 26);
     cutscene_event(cutscene_unused_exit_focus_mario, c, 28, -1);
 
     update_camera_yaw(c);
