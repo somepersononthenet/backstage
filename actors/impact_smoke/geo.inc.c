@@ -2,7 +2,7 @@
 const GeoLayout bowser_impact_smoke_geo[] = {
     GEO_NODE_START(),
     GEO_OPEN_NODE(),
-    GEO_SWITCH_CASE(5, geo_switch_anim_state)
+    GEO_SWITCH_CASE(5, geo_switch_anim_state),
             GEO_DISPLAY_LIST(LAYER_TRANSPARENT, impact_smoke_seg6_dl_06062B38),
             GEO_DISPLAY_LIST(LAYER_TRANSPARENT, impact_smoke_seg6_dl_06062BD8),
             GEO_DISPLAY_LIST(LAYER_TRANSPARENT, impact_smoke_seg6_dl_06062C78),

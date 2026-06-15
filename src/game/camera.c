@@ -750,6 +750,7 @@ s32 update_radial_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
         calc_y_to_curr_floor(&posY, 1.f, 200.f, &focusY, 0.9f, 200.f);
         focus_on_mario(focus, pos, posY + yOff, focusY + yOff, sLakituDist + baseDist, pitch, camYaw);
     }
+
     
     return camYaw;
 }
@@ -830,7 +831,7 @@ void radial_camera_move(struct Camera *c) {
         areaDistX = -areaDistX;
         areaDistZ = -areaDistZ;
     }
-}
+
 
 
     // Avoid obstructing walls
@@ -911,9 +912,9 @@ void radial_camera_move(struct Camera *c) {
                         rotateSpeed = 0x3A;
                     } else if (gCurrLevelNum == LEVEL_LLL) {
                         rotateSpeed = 0x10;
-                    }
-                      else if (gCurrLevelNum == LEVEL_DDD) {
+                    } else if (gCurrLevelNum == LEVEL_DDD) {
                         rotateSpeed = 100.f;
+                    }
                 }
                 // turning logic, i
                 if (gMarioStates->forwardVel != 0) {
@@ -934,8 +935,8 @@ void radial_camera_move(struct Camera *c) {
     if (sModeOffsetYaw < -0x5554) {
         sModeOffsetYaw = -0x5554;
     }
-}
 
+}
 /**
  * Moves Lakitu from zoomed in to zoomed out and vice versa.
  * When C-Down mode is not active, sLakituDist and sLakituPitch decrease to 0.
@@ -1547,17 +1548,21 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     vec3f_get_dist_and_angle(focus, pos, &dist, &pitch, &yaw);    
     camera_approach_s16_symmetric_bool(&yaw, marioYaw, 192);
 
-    if (c->mode == CAMERA_MODE_WATER_SURFACE) {
+     if (c->mode == CAMERA_MODE_WATER_SURFACE) {
         if (c->pos[1] > gMarioStates->waterLevel + 120) {
             dist -= 40.f;
             camera_approach_s16_symmetric_bool(&pitch, goalPitch, 96);
         } else {
-            if (dist > 1000) dist = 1000;
-            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384); 
+            if (dist > 1000) dist = 1000; 
+            camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
         } 
+        
+        
     } else { 
         if (dist > 1000) dist = 1000;
         camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
+    }
+
     if (dist < 300.f) {
         dist = 300.f;
     }
@@ -1565,7 +1570,6 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
 
     return yaw;
 }
-
 /**
  * "Behind Mario" mode: used when Mario is flying, on the water's surface, or shot from a cannon
  */
