@@ -821,7 +821,7 @@ u32 interact_door(struct MarioState *m, UNUSED u32 interactType, struct Object *
     s16 requiredNumStars = o->oBhvParams >> 24;
     s16 numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
 
-    if (m->action == ACT_WALKING ||) {
+    if (m->action == ACT_WALKING ) {
         if (numStars >= requiredNumStars) {
             u32 actionArg = should_push_or_pull_door(m, o);
             u32 enterDoorAction;
