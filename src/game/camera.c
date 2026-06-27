@@ -2842,7 +2842,8 @@ void init_camera(struct Camera *c) {
             gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
             break;
         case LEVEL_CASTLE:
-            marioOffset[2] = 190.f;
+            vec3f_set(marioOffset, 0.f, 0.f, 0xc0);
+            sFOVState.fov = 64.f;
             break;
     }
     if (c->mode == CAMERA_MODE_8_DIRECTIONS) {
@@ -4759,7 +4760,7 @@ void check_blocking_area_processing(const u8 *mode) {
 BAD_RETURN(s32) cam_castle_enter_lobby(struct Camera *c) {
     if (c->mode != CAMERA_MODE_FIXED) {
         sStatusFlags &= ~CAM_FLAG_SMOOTH_MOVEMENT;
-        vec3f_set(sFixedModeBasePosition, 646.0f, 143.0f, -1420.0f);
+        //vec3f_set(sFixedModeBasePosition, 646.0f, 143.0f, -1420.0f);
         c->mode = CAMERA_MODE_FIXED;
     }
 }
