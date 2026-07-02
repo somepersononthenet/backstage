@@ -35,6 +35,9 @@
 u32 unused80339F10;
 u8 unused80339F1C[20];
 
+
+#define QUIT_LEVEL_SELECT_COMBO (Z_TRIG | START_BUTTON | L_CBUTTONS | R_CBUTTONS)
+
 /**************************************************
  *                    ANIMATIONS                  *
  **************************************************/
@@ -1182,6 +1185,9 @@ void update_mario_button_inputs(struct MarioState *m) {
 
     if (m->action != ACT_DEBUG_FREE_MOVE && m->controller->buttonPressed & D_JPAD) {
         set_mario_action(m, ACT_DEBUG_FREE_MOVE, 0);
+    }
+    if (gPlayer1Controller->buttonDown == QUIT_LEVEL_SELECT_COMBO) {
+        initiate_warp(LEVEL_CASTLE, 1, 0x1F, 0); // this replicates the weird instantenious castle warp on ゲームカタログ２ 1995年12月02日 at 12:09
     }
 #endif
     if (m->controller->buttonPressed & A_BUTTON) {

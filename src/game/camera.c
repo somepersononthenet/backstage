@@ -1321,7 +1321,7 @@ s32 update_fixed_camera(struct Camera *c, Vec3f focus, UNUSED Vec3f pos) {
 
     calc_y_to_curr_floor(&focusFloorOff, 1.f, 200.f, &focusFloorOff, 0.9f, 200.f);
     vec3f_copy(focus, sMarioCamState->pos);
-    focus[1] += focusFloorOff + 130.f;
+    focus[1] += focusFloorOff + 125.f;
     vec3f_get_dist_and_angle(focus, c->pos, &distCamToFocus, &faceAngle[0], &faceAngle[1]);
     faceAngle[2] = 0;
 
@@ -1553,13 +1553,13 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
             dist -= 40.f;
             camera_approach_s16_symmetric_bool(&pitch, goalPitch, 96);
         } else {
-            if (dist > 1000) dist = 1000; 
+            if (dist > 0x450) dist = 0x450; 
             camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
         } 
         
         
     } else { 
-        if (dist > 1000) dist = 1000;
+        if (dist > 0x480) dist = 0x480;
         camera_approach_s16_symmetric_bool(&pitch, goalPitch, 384);
     }
 
@@ -1624,7 +1624,7 @@ s16 update_slide_camera(struct Camera *c) {
     s16 goalPitch = 0x1555;
     s16 goalYaw = sMarioCamState->faceAngle[1] + DEGREES(180);
 
-    sLakituDist = approach_f32(sLakituDist, 0.f, 20.f, 20.f);
+    //sLakituDist = approach_f32(sLakituDist, 0.f, 20.f, 20.f);
 
     // Focus on Mario
     vec3f_copy(c->focus, sMarioCamState->pos);
@@ -6119,31 +6119,44 @@ BAD_RETURN(s32) cutscene_non_painting_death(struct Camera *c) {
 }
 
 BAD_RETURN(s32) cutscene_intro_init(struct Camera *c) {
-    c->pos[1] += 0x90;
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, -529, 0, 1100);
+    f32 dist;
+    s16 pitch, yaw;
+    set_focus_rel_mario(c, 0.f, 125.f, 0.f, 0);
+    vec3f_get_dist_and_angle(sMarioCamState->pos, c->pos, &dist, &pitch, &yaw);
+    // Fix dist (xzdist = ~300)
+    dist = 315.f;
+    vec3f_set_dist_and_angle(sMarioCamState->pos, c->pos, dist, pitch, yaw);
+    c->pos[1] = 360.f;
+    // rotate a lil to make it more accurate 
+    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, -60); 
 }
 
 BAD_RETURN(s32) cutscene_intro_rotate_camera(struct Camera *c) {
-    rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, -462);
-
-    if (gCutsceneTimer > 60) {
-        c->pos[0] = c->focus[0];
-    }
+rotate_and_move_vec3f(c->pos, sMarioCamState->pos, 0, 0, -468); 
 }
 
 BAD_RETURN(s32) cutscene_intro_zoom(struct Camera *c) {
-    // end values
-    f32 targetY = c->focus[1] - 12 ;
-    f32 targetZ = c->focus[2] + 275.0f ;
-    // approach the end values by 8% each frame
-    approach_f32_asymptotic_bool(&c->pos[1], targetY, 0.08f) ;
-    approach_f32_asymptotic_bool(&c->pos[2], targetZ, 0.08f) ;
+    /*  
+     *  Ease into final angle during textbox
+     *  Look at the skybox in Gamesmaster - it snaps instantly all the
+     *  way down before the cutscene is done moving? Should be looked at
+     *  
+     *  Terrible final angle and needs to be redone
+     */
+    approach_f32_asymptotic_bool(&c->pos[0], c->focus[0], 0.1f) ;
+    approach_f32_asymptotic_bool(&c->pos[1], c->focus[1] - 15.f, 0.1f) ;
+    approach_f32_asymptotic_bool(&c->pos[2], c->focus[2] + 282.0f, 0.1f) ;
 }
 
 BAD_RETURN(s32) cutscene_intro(struct Camera *c) {
-    cutscene_event(cutscene_intro_init, c, 0, 0);
-    cutscene_event(cutscene_intro_rotate_camera, c, 0, 61);
-    cutscene_event(cutscene_intro_zoom, c, 64, 79);
+    /* 
+     * Starting rotation on frame 4 assures that C-Band, 
+     * Computermesse, and Gamesmaster all line up with
+     * showfloor, even if it looks bad
+     */
+    cutscene_event(cutscene_intro_init, c, 0, 1);
+    cutscene_event(cutscene_intro_rotate_camera, c, 3, 60); 
+    cutscene_event(cutscene_intro_zoom, c, 62, 79);
 }
 
 BAD_RETURN(s32) cutscene_intro_end(struct Camera *c) {
@@ -6414,7 +6427,7 @@ BAD_RETURN(s32) cutscene_door_move_behind_mario(struct Camera *c) {
 
     if (doorRotation == 0) { // pulling door
         camOffset[0] = 125.f;
-        camOffset[1] = 40.f;
+        camOffset[1] = 30.f;
         camOffset[2] = 240.f; // used to be 280.f
     } else {                  // pushing door
         camOffset[0] = -85.f;
@@ -6561,7 +6574,7 @@ struct Cutscene sCutsceneUnusedExit[] = { { cutscene_unused_exit_start, 1 },
 /**
  * The intro of the game.
  */
-struct Cutscene sCutsceneIntro[] = { { cutscene_intro, 75 }, { cutscene_intro_end, CUTSCENE_LOOP } };
+struct Cutscene sCutsceneIntro[] = { { cutscene_intro, 79 }, { cutscene_intro_end, CUTSCENE_LOOP } };
 
 /**
  * Cutscene that plays when Mario dies while standing, or from electrocution.
