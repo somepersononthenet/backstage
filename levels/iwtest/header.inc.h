@@ -1,0 +1,17 @@
+extern const GeoLayout iwtest_area_1_geo[];
+extern const GeoLayout iwtest_area_1[];
+extern const Collision iwtest_area_1_collision[];
+extern const MacroObject iwtest_area_1_macro_objs[];
+extern Lights1 iwtest_dl_grass_lights;
+extern Lights1 iwtest_dl_brick_lights;
+extern u8 iwtest_dl__16_rgba16_rgba16[];
+extern u8 iwtest_dl__19_rgba16_rgba16[];
+extern Vtx iwtest_dl_RCP_map37_mesh_mesh_layer_1_vtx_0[396];
+extern Gfx iwtest_dl_RCP_map37_mesh_mesh_layer_1_tri_0[];
+extern Vtx iwtest_dl_RCP_map37_mesh_mesh_layer_1_vtx_1[68];
+extern Gfx iwtest_dl_RCP_map37_mesh_mesh_layer_1_tri_1[];
+extern Gfx mat_iwtest_dl_grass[];
+extern Gfx mat_revert_iwtest_dl_grass[];
+extern Gfx mat_iwtest_dl_brick[];
+extern Gfx mat_revert_iwtest_dl_brick[];
+extern Gfx iwtest_dl_RCP_map37_mesh_mesh_layer_1_with_revert[];

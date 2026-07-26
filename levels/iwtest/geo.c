@@ -11,6 +11,6 @@
 
 #include "make_const_nonconst.h"
 
-#include "levels/iwtest/header.h"
+#include "header.h"
 
-#include "levels/iwtest/areas/1/geo.inc.c"
+#include "geo.inc.c"
